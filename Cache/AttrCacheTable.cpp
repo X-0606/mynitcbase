@@ -89,6 +89,7 @@ int AttrCacheTable::getSearchIndex(int relId, char attrName[ATTR_SIZE], IndexId 
 
   return E_ATTRNOTEXIST;
 }
+
 int AttrCacheTable::getSearchIndex(int relId, int attrOffset, IndexId *searchIndex)
 {
 

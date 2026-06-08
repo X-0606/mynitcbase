@@ -4,7 +4,7 @@
 #include "../Buffer/BlockBuffer.h"
 #include "../define/constants.h"
 #include "../define/id.h"
-
+#include "OpenRelTable.h"
 typedef struct RelCatEntry {
   char relName[ATTR_SIZE];
   int numAttrs;
@@ -20,7 +20,6 @@ typedef struct RelCacheEntry {
   bool dirty;
   RecId recId;
   RecId searchIndex;
-
 } RelCacheEntry;
 
 class RelCacheTable {

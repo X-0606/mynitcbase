@@ -5,6 +5,8 @@
 #include <cstring>
 #include <cstdlib>
 #include <iostream>
+using namespace std;
+
 
 OpenRelTableMetaInfo OpenRelTable::tableMetaInfo[MAX_OPEN];
 
@@ -85,6 +87,7 @@ int OpenRelTable::getRelId(char relName[ATTR_SIZE])
     {
       if (strcmp(OpenRelTable::tableMetaInfo[i].relName, relName) == 0)
       {
+        OpenRelTable::increaseTimeStamp(i);
         return i;
       }
     }
@@ -94,14 +97,46 @@ int OpenRelTable::getRelId(char relName[ATTR_SIZE])
 
 int OpenRelTable::getFreeOpenRelTableEntry()
 {
-  for (int i = 2; i < 12; i++)
+
+  for (int i = 2; i < MAX_OPEN; i++)
   {
     if (OpenRelTable::tableMetaInfo[i].free == true)
     {
+      OpenRelTable::increaseTimeStamp(i);
       return i;
     }
+
+    
   }
-  return E_CACHEFULL;
+
+  // The cache is full. LRU algorithm must be implemented.
+  int lruCacheEntry=-1;
+  int maxTimeStamp=-1;
+  for(int i=2;i<MAX_OPEN;i++){
+     if(maxTimeStamp<OpenRelTable::tableMetaInfo[i].timeStamp){
+         maxTimeStamp=OpenRelTable::tableMetaInfo[i].timeStamp;
+         lruCacheEntry=i;
+     }
+  }
+
+
+  OpenRelTable::increaseTimeStamp(lruCacheEntry);
+
+  OpenRelTable::closeRel(lruCacheEntry);
+
+  return lruCacheEntry;
+}
+
+void OpenRelTable::increaseTimeStamp(int relId){
+  for (int i = 2; i < MAX_OPEN; i++) {
+    if (OpenRelTable::tableMetaInfo[i].free == false) {
+      if (i == relId) {
+        OpenRelTable::tableMetaInfo[i].timeStamp = 0;
+      } else {
+        OpenRelTable::tableMetaInfo[i].timeStamp++;
+      }
+    }
+  }
 }
 
 int OpenRelTable::openRel(char relName[ATTR_SIZE])
@@ -180,11 +215,14 @@ int OpenRelTable::openRel(char relName[ATTR_SIZE])
   OpenRelTable::tableMetaInfo[relId].free = false;
   strcpy(OpenRelTable::tableMetaInfo[relId].relName, relName);
 
+  OpenRelTable::tableMetaInfo[relId].timeStamp=0;
+
   return relId;
 }
 
 int OpenRelTable::closeRel(int relId)
 {
+
   if (relId == 1 || relId == 0)
   {
     return E_NOTPERMITTED;

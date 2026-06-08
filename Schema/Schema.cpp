@@ -23,10 +23,13 @@ int Schema::closeRel(char relName[ATTR_SIZE])
     }
 
     int relId = OpenRelTable::getRelId(relName);
-
     if (relId == E_RELNOTOPEN)
     {
-        return E_RELNOTOPEN;
+        relId = OpenRelTable::openRel(relName);
+        if (relId < 0)
+        {
+            return relId;
+        }
     }
 
     return OpenRelTable::closeRel(relId);
@@ -162,7 +165,11 @@ int Schema::createIndex(char relName[ATTR_SIZE], char attrName[ATTR_SIZE])
     int relId = OpenRelTable::getRelId(relName);
     if (relId == E_RELNOTOPEN)
     {
-        return E_RELNOTOPEN;
+        relId = OpenRelTable::openRel(relName);
+        if (relId < 0)
+        {
+            return relId;
+        }
     }
 
     return BPlusTree::bPlusCreate(relId, attrName);
@@ -179,7 +186,11 @@ int Schema::dropIndex(char *relName, char *attrName)
 
     if (relId == E_RELNOTOPEN)
     {
-        return E_RELNOTOPEN;
+        relId = OpenRelTable::openRel(relName);
+        if (relId < 0)
+        {
+            return relId;
+        }
     }
 
     AttrCatEntry attrCatBuf;

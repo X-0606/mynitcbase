@@ -10,10 +10,15 @@
 typedef struct OpenRelTableMetaInfo {
   bool free;
   char relName[ATTR_SIZE];
+  int timeStamp;
 
 } OpenRelTableMetaInfo;
 
+
+
 class OpenRelTable {
+  friend class RelCacheTable;
+  friend class AttrCacheTable;
  public:
   // methods
   OpenRelTable();
@@ -21,6 +26,7 @@ class OpenRelTable {
   static int getRelId(char relName[ATTR_SIZE]);
   static int openRel(char relName[ATTR_SIZE]);
   static int closeRel(int relId);
+  static void increaseTimeStamp(int relId);
 
  private:
   // field

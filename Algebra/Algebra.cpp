@@ -142,7 +142,11 @@ int Algebra::insert(char relName[ATTR_SIZE], int nAttrs, char record[][ATTR_SIZE
     int relId = OpenRelTable::getRelId(relName);
     if (relId == E_RELNOTOPEN)
     {
-        return E_RELNOTOPEN;
+        relId = OpenRelTable::openRel(relName);
+        if (relId < 0)
+        {
+            return relId;
+        }
     }
 
     RelCatEntry relcatentry;
@@ -371,11 +375,15 @@ int Algebra::join(char srcRelation1[ATTR_SIZE], char srcRelation2[ATTR_SIZE], ch
 {
 
     int srcrelid1 = OpenRelTable::getRelId(srcRelation1);
-    int srcrelid2 = OpenRelTable::getRelId(srcRelation2);
+    if (srcrelid1 == E_RELNOTOPEN) {
+        srcrelid1 = OpenRelTable::openRel(srcRelation1);
+        if (srcrelid1 < 0) return srcrelid1;
+    }
 
-    if (srcrelid2 == E_RELNOTOPEN || srcrelid1 == E_RELNOTOPEN)
-    {
-        return E_RELNOTOPEN;
+    int srcrelid2 = OpenRelTable::getRelId(srcRelation2);
+    if (srcrelid2 == E_RELNOTOPEN) {
+        srcrelid2 = OpenRelTable::openRel(srcRelation2);
+        if (srcrelid2 < 0) return srcrelid2;
     }
 
     AttrCatEntry attrCatEntry1, attrCatEntry2;

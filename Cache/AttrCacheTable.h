@@ -4,6 +4,7 @@
 #include "../Buffer/BlockBuffer.h"
 #include "../define/constants.h"
 #include "../define/id.h"
+#include "OpenRelTable.h"
 
 typedef struct AttrCatEntry {
   char relName[ATTR_SIZE];
