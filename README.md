@@ -65,28 +65,30 @@ Follow these steps to set up the required directory structure, compile the datab
 
 1. **Clone the repository and navigate into the project:**
    ```bash
-   git clone [https://github.com/X-0606/mynitcbase.git](https://github.com/X-0606/mynitcbase.git)
-   cd mynitcbase
+   mkdir NITCBase
+   cd NITCBase
+   git clone https://github.com/leepCh/mynitcbase
    ```
-2. ** Create the folder environment **
+2. **Create the folder environment**
   ```bash
-mkdir Disk Files
-cd Files
-mkdir Batch_Execution_Files Input_Files Output_Files
-cd ..
-```
-3. ** Compile the source code **
+   mkdir Disk Files
+   cd Files
+   mkdir Batch_Execution_Files Input_Files Output_Files
+   cd ..
+  ```
+3. **Compile the source code**
    ``` bash
+   cd mynitcbase
    make
    ```
-4. ** Run the binary file **
+4. **Run the binary file**
    ``` bash
    ./nitcbase
    ```
 Now you should be inside the interactive prompt. Inside that run 
-``` bash
-#fdisk
-```
+   ``` bash
+  #fdisk
+   ```
 To format the disk.
 
  
