@@ -30,7 +30,7 @@ class AttrCacheTable {
 
  public:
   // methods
-  static int getAttrCatEntry(int relId, char attrName[ATTR_SIZE], AttrCatEntry *attrCatBuf);
+  static int getAttrCatEntry(int relId, const char *attrName, AttrCatEntry *attrCatBuf);
   static int getAttrCatEntry(int relId, int attrOffset, AttrCatEntry *attrCatBuf);
   static int setAttrCatEntry(int relId, char attrName[ATTR_SIZE], AttrCatEntry *attrCatBuf);
   static int setAttrCatEntry(int relId, int attrOffset, AttrCatEntry *attrCatBuf);

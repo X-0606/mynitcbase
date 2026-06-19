@@ -3,7 +3,7 @@
 #include <cstring>
 #include <iostream>
 
-RecId BlockAccess::linearSearch(int relId, char attrName[ATTR_SIZE], union Attribute attrVal, int op)
+RecId BlockAccess::linearSearch(int relId, const char *attrName, union Attribute attrVal, int op)
 {
     RecId prevRecId;
     int ret = RelCacheTable::getSearchIndex(relId, &prevRecId);

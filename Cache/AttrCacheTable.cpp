@@ -41,7 +41,7 @@ void AttrCacheTable::recordToAttrCatEntry(union Attribute record[ATTRCAT_NO_ATTR
   attrCatEntry->offset = (int)record[5].nVal;
 }
 
-int AttrCacheTable::getAttrCatEntry(int relId, char attrName[ATTR_SIZE], AttrCatEntry *attrCatBuf)
+int AttrCacheTable::getAttrCatEntry(int relId, const char *attrName, AttrCatEntry *attrCatBuf)
 {
   if (relId < 0 || relId > 12)
   {
