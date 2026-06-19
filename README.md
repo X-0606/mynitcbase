@@ -61,6 +61,8 @@ This project systematically implements the database internals over 12 distinct s
 * **Build Tool:** `make` utility
 
 ### Build and Execution
+
+### APT linux distros
 Follow these steps to set up the required directory structure, compile the database engine, and initialize the simulated file system.
 
 1. **Clone the repository and navigate into the project:**
@@ -90,6 +92,48 @@ Now you should be inside the interactive prompt. Inside that run
   #fdisk
    ```
 To format the disk.
+
+### Docker
+
+1. **Get the Dockerfile into your directory wget**
+
+``` bash
+wget https://raw.githubusercontent.com/leepCh/mynitcbase/refs/heads/main/Dockerfile
+```
+
+``` bash
+mkdir NITCbase
+```
+
+2. **Build the image**
+
+``` bash
+docker build -t nitcbase:debian
+```
+
+3. **Run the container using bind mount volume**
+
+``` bash
+docker run -v $PWD/NITCbase:/home/nitcbase/NITCbase -d --name nitcbase -i nitcbase:debian 
+```
+
+4. **Get a shell inside it**
+
+``` bash
+docker exec -it nitcbase
+```
+
+then
+
+``` bash
+cd /home/nitcbase
+bash script.sh
+```
+
+Now you will get all the files inside NITCbase directory.
+
+
+
 
  
   
